@@ -58,10 +58,11 @@ public class AdvertisementFragment extends Fragment{
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml
+        String city = "jakarta";
         int id = item.getItemId();
         if (id == R.id.action_refresh) {
             FetchGeoTask geoTask = new FetchGeoTask();
-            geoTask.execute("94043");
+            geoTask.execute(city);
             return true;
         }
         return super.onOptionsItemSelected(item);
