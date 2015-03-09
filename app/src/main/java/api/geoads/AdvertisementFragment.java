@@ -1,10 +1,5 @@
 package api.geoads;
 
-/**
- * Created by Rizky Eko Putra on 3/9/2015.
- */
-
-
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -36,13 +31,13 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Encapsulates fetching the forecast and displaying it as a {@link ListView} layout.
+ * Created by Rizky Eko Putra on 3/9/2015.
  */
-public class ForecastFragment extends Fragment {
+public class AdvertisementFragment extends Fragment{
 
-    private ArrayAdapter<String> mForecastAdapter; // setelah data JSON dapat
+    private ArrayAdapter<String> mAdvertisementAdapter; // setelah data JSON dapat
 
-    public ForecastFragment() {
+    public AdvertisementFragment() {
 
     }
 
@@ -55,7 +50,7 @@ public class ForecastFragment extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.forecastfragment, menu);
+        inflater.inflate(R.menu.advertisementfragment, menu);
     }
 
     @Override
@@ -65,8 +60,8 @@ public class ForecastFragment extends Fragment {
         // as you specify a parent activity in AndroidManifest.xml
         int id = item.getItemId();
         if (id == R.id.action_refresh) {
-            FetchWeatherTask weatherTask = new FetchWeatherTask();
-            weatherTask.execute("94043");
+            FetchGeoTask geoTask = new FetchGeoTask();
+            geoTask.execute("94043");
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -92,7 +87,7 @@ public class ForecastFragment extends Fragment {
         // Now that we have some dummy forecast data, create an ArrayAdapter.
         // The ArrayAdapter will take data from a source (like our dummy forecast) and
         // use it to populate the ListView it's attached to.
-        mForecastAdapter =
+        mAdvertisementAdapter =
                 new ArrayAdapter<String>(
                         getActivity(), // The current context (this activity)
                         R.layout.list_item_advertisement, // The name of the layout ID.
@@ -103,14 +98,14 @@ public class ForecastFragment extends Fragment {
 
         // Get a reference to the ListView, and attach this adapter to it.
         ListView listView = (ListView) rootView.findViewById(R.id.listview_advertisement);
-        listView.setAdapter(mForecastAdapter);
+        listView.setAdapter(mAdvertisementAdapter);
 
         return rootView;
     }
 
-    public class FetchWeatherTask extends AsyncTask<String, Void, String[]> {
+    public class FetchGeoTask extends AsyncTask<String, Void, String[]> {
 
-        private final String LOG_TAG = FetchWeatherTask.class.getSimpleName();
+        private final String LOG_TAG = FetchGeoTask.class.getSimpleName();
 //TODO: terjemahkan kode JSON di bagian ini
         /**
          * The date/time conversion code is going to be moved outside the asynctask later,
@@ -145,7 +140,7 @@ public class ForecastFragment extends Fragment {
          * into an Object hierarchy for us.
          */
         private String[] getWeatherDataFromJson(String forecastJsonStr, int numDays)
-            throws JSONException {
+                throws JSONException {
 
             // These are the names of the JSON objects that need to be extracted.
             final String OWM_LIST = "list";
@@ -297,13 +292,13 @@ public class ForecastFragment extends Fragment {
             return null;
         }
 
-// Tambah setelah dapat data JSON
+        // Tambah setelah dapat data JSON
         @Override
         protected void onPostExecute(String[] result) {
             if (result != null) {
-                mForecastAdapter.clear();
+                mAdvertisementAdapter.clear();
                 for(String dayForecastStr : result) {
-                    mForecastAdapter.add(dayForecastStr);
+                    mAdvertisementAdapter.add(dayForecastStr);
                 }
                 // New data is back from the server. Hooray!
             }
